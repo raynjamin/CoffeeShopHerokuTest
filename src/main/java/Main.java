@@ -20,6 +20,10 @@ public class Main {
   private static ArrayList<CoffeeShop> shops = new ArrayList<>();
 
   public static void main(String[] args) {
+      before((request, response) -> {
+          response.header("Access-Control-Allow-Origin", "*");
+      });
+
 
     port(Integer.valueOf(System.getenv("PORT")));
     staticFileLocation("/public");
