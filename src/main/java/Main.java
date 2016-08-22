@@ -20,12 +20,14 @@ public class Main {
   private static ArrayList<CoffeeShop> shops = new ArrayList<>();
 
   public static void main(String[] args) {
-      port(Integer.valueOf(System.getenv("PORT")));
-     before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
 
 
+
+    port(Integer.valueOf(System.getenv("PORT")));
     staticFileLocation("/public");
+
+      before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
 
     get("/hello", (req, res) -> "Hello World");
 
