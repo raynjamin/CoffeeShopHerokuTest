@@ -17,6 +17,7 @@ import static spark.Spark.get;
 public class Main {
 
     private static ArrayList<CoffeeShop> shops = new ArrayList<>();
+    private static Gson gson = new Gson();
 
     public static void main(String[] args) {
         String test = System.getenv("PORT");
@@ -39,20 +40,10 @@ public class Main {
             return new ModelAndView(attributes, "index.ftl");
         }, new FreeMarkerEngine());
 
-        get("/coffee-shops", (req, res) -> {
-            Gson gson = new Gson();
-
-            return gson.toJson(shops);
-        });
+        get("/coffee-shops", (req, res) -> gson.toJson(shops));
 
         post("/coffee-shops", (req, res) -> {
-            String name = req.queryParams("name");
-            String rating = req.queryParams("rating");
-            String price = req.queryParams("price");
-            
-
-
-            shops.add(new CoffeeShop(name, Integer.valueOf(rating), Integer.valueOf(price)));
+            shops.add(gson.fromJson(req.body(), CoffeeShop.class));
 
             return 200;
         });
