@@ -19,7 +19,13 @@ public class Main {
     private static ArrayList<CoffeeShop> shops = new ArrayList<>();
 
     public static void main(String[] args) {
-        port(Integer.valueOf(System.getenv("PORT")));
+        String test = System.getenv("PORT");
+
+        if (test != null) {
+            port(Integer.valueOf(test));
+        } else {
+            port(5000);
+        }
         staticFileLocation("/public");
 
         before((request, response) -> response.header("Access-Control-Allow-Origin", "*"));
@@ -40,11 +46,11 @@ public class Main {
         });
 
         post("/coffee-shops", (req, res) -> {
-            String name = req.params("name");
-            String rating = req.params("rating");
-            String price = req.params("price");
+            String name = req.queryParams("name");
+            String rating = req.queryParams("rating");
+            String price = req.queryParams("price");
+            
 
-            System.out.println(name);
 
             shops.add(new CoffeeShop(name, Integer.valueOf(rating), Integer.valueOf(price)));
 
