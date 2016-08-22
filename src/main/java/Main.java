@@ -44,6 +44,8 @@ public class Main {
             String rating = req.params("rating");
             String price = req.params("price");
 
+            System.out.println(name);
+
             shops.add(new CoffeeShop(name, Integer.valueOf(rating), Integer.valueOf(price)));
 
             return 200;
